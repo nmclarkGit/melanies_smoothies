@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
+import requests
 
 conn = st.connection("snowflake")
 session = conn.session()
@@ -10,15 +11,19 @@ st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
 st.write(
     """Choose the fruits you want in your custom Smoothie!
     """)
+
 name_on_order = st.text_input("Name on Smoothie:")
 st.write("The name on your Smoothie will be:", name_on_order)
+
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 #st.dataframe(data=my_dataframe, use_container_width=True)
+
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:'
    , my_dataframe
-   ,max_selections=5
+   , max_selections=5
 )
+
 if ingredients_list:
     ingredients_string = ''
     
@@ -35,9 +40,6 @@ if ingredients_list:
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered!', icon="✅")
 
-python# New section to display smoothiefroot nutrition information
-import requests
+# New section to display smoothiefroot nutrition information
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
 st.text(smoothiefroot_response.json())
-
-
