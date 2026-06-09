@@ -38,11 +38,6 @@ if ingredients_list:
 python# New section to display smoothiefroot nutrition information
 import requests
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-st.text(smoothiefroot_response)
+st.text(smoothiefroot_response.json())
 
-st.markdown("""
-- :page_with_curl: [Streamlit open source documentation](https://docs.streamlit.io)
-- :snowflake: [Streamlit in Snowflake documentation](https://docs.snowflake.com/en/developer-guide/streamlit/about-streamlit)
-- :books: [Demo repo with templates](https://github.com/Snowflake-Labs/snowflake-demo-streamlit)
-- :memo: [Streamlit in Snowflake release notes](https://docs.snowflake.com/en/release-notes/streamlit-in-snowflake)
-""")
+
